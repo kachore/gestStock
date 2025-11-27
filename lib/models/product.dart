@@ -7,6 +7,7 @@ class Product {
   final double price;
   final int quantity;
   final String? imagePath;
+  final String? supplier; // Nouveau champ fournisseur
   final String createdAt;
 
   Product({
@@ -16,6 +17,7 @@ class Product {
     required this.price,
     required this.quantity,
     this.imagePath,
+    this.supplier, // Nouveau paramètre
     String? createdAt,
   }) : createdAt = createdAt ?? DateTime.now().toIso8601String();
 
@@ -28,6 +30,7 @@ class Product {
       'price': price,
       'quantity': quantity,
       'imagePath': imagePath,
+      'supplier': supplier,
       'createdAt': createdAt,
     };
   }
@@ -41,6 +44,7 @@ class Product {
       price: (map['price'] as num).toDouble(),
       quantity: map['quantity'] as int,
       imagePath: map['imagePath'] as String?,
+      supplier: map['supplier'] as String?,
       createdAt: map['createdAt'] as String,
     );
   }
@@ -53,6 +57,7 @@ class Product {
     double? price,
     int? quantity,
     String? imagePath,
+    String? supplier,
     String? createdAt,
   }) {
     return Product(
@@ -62,12 +67,13 @@ class Product {
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
       imagePath: imagePath ?? this.imagePath,
+      supplier: supplier ?? this.supplier,
       createdAt: createdAt ?? this.createdAt,
     );
   }
 
   // Vérifier si le stock est bas
-  bool get isLowStock => quantity <= 5;
+  bool get isLowStock => quantity <= 2;
 
   @override
   String toString() {

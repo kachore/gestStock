@@ -1,5 +1,6 @@
 // lib/widgets/product_card.dart
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../models/category.dart';
@@ -44,8 +45,8 @@ class ProductCard extends StatelessWidget {
                 child: product.imagePath != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          product.imagePath!,
+                        child: Image.file(
+                          File(product.imagePath!),
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(
@@ -67,60 +68,102 @@ class ProductCard extends StatelessWidget {
               // Informations produit
               Expanded(
                 child: Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    Text(product.name,
-        style: const TextStyle(
-            fontSize: 16, fontWeight: FontWeight.bold)),
-    const SizedBox(height: 6),
-    if (category != null)
-      Text('Catégorie : ${category!.name}',
-          style: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
-    const SizedBox(height: 8),
-    Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: product.isLowStock
-            ? AppConstants.errorColor.withOpacity(0.12)
-            : AppConstants.successColor.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            product.isLowStock ? Icons.warning : Icons.check_circle,
-            size: 14,
-            color: product.isLowStock
-                ? AppConstants.errorColor
-                : AppConstants.successColor,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            'Stock : ${product.quantity}',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: product.isLowStock
-                  ? AppConstants.errorColor
-                  : AppConstants.successColor,
-            ),
-          ),
-        ],
-      ),
-    ),
-    const SizedBox(height: 6),
-    Text(
-      Helpers.formatPrice(product.price),
-      style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: AppConstants.primaryColor),
-    ),
-  ],
-),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppConstants.textColor,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    if (category != null)
+                      Text(
+                        'Catégorie : ${category!.name}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    if (product.supplier != null) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.business,
+                            size: 14,
+                            color: Colors.grey.shade600,
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              product.supplier!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: product.isLowStock
+                                ? AppConstants.errorColor.withOpacity(0.1)
+                                : AppConstants.successColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                product.isLowStock
+                                    ? Icons.warning
+                                    : Icons.check_circle,
+                                size: 14,
+                                color: product.isLowStock
+                                    ? AppConstants.errorColor
+                                    : AppConstants.successColor,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Stock : ${product.quantity}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: product.isLowStock
+                                      ? AppConstants.errorColor
+                                      : AppConstants.successColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          Helpers.formatPrice(product.price),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppConstants.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-
               
               // Actions
               if (onEdit != null || onDelete != null)

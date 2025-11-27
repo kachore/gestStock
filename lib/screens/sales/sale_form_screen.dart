@@ -20,6 +20,7 @@ class SaleFormScreen extends StatefulWidget {
 class _SaleFormScreenState extends State<SaleFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _quantityController = TextEditingController();
+  final _customerController = TextEditingController(); // Nouveau champ
   
   Product? _selectedProduct;
   bool _isLoading = false;
@@ -28,9 +29,7 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    _loadProducts(); // <--- plus jamais de notifyListeners() pendant le build
-  });
+    _loadProducts();
     _quantityController.addListener(_calculateTotal);
   }
 
@@ -41,6 +40,7 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
   @override
   void dispose() {
     _quantityController.dispose();
+    _customerController.dispose();
     super.dispose();
   }
 
@@ -230,6 +230,17 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 16),
+
+                    // Info client (optionnel)
+                    TextFormField(
+                      controller: _customerController,
+                      decoration: const InputDecoration(
+                        labelText: 'Info client (optionnel)',
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Nom ou numéro du client',
+                      ),
+                    ),
                     const SizedBox(height: 24),
 
                     // Total
@@ -301,6 +312,9 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
       quantity: quantity,
       unitPrice: _selectedProduct!.price,
       totalPrice: _totalPrice,
+      customerInfo: _customerController.text.trim().isEmpty 
+          ? null 
+          : _customerController.text.trim(),
     );
 
     final saleProvider = context.read<SaleProvider>();

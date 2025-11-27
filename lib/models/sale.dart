@@ -7,15 +7,17 @@ class Sale {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
+  final String? customerInfo; // Nouveau champ client
   final String date;
 
-  Sale({  
+  Sale({
     this.id,
     required this.productId,
     required this.productName,
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
+    this.customerInfo, // Nouveau paramètre
     String? date,
   }) : date = date ?? DateTime.now().toIso8601String();
 
@@ -28,6 +30,7 @@ class Sale {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'totalPrice': totalPrice,
+      'customerInfo': customerInfo,
       'date': date,
     };
   }
@@ -41,6 +44,7 @@ class Sale {
       quantity: map['quantity'] as int,
       unitPrice: (map['unitPrice'] as num).toDouble(),
       totalPrice: (map['totalPrice'] as num).toDouble(),
+      customerInfo: map['customerInfo'] as String?,
       date: map['date'] as String,
     );
   }
@@ -53,6 +57,7 @@ class Sale {
     int? quantity,
     double? unitPrice,
     double? totalPrice,
+    String? customerInfo,
     String? date,
   }) {
     return Sale(
@@ -62,6 +67,7 @@ class Sale {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       totalPrice: totalPrice ?? this.totalPrice,
+      customerInfo: customerInfo ?? this.customerInfo,
       date: date ?? this.date,
     );
   }
