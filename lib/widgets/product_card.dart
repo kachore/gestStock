@@ -154,7 +154,7 @@ class ProductCard extends StatelessWidget {
                         Text(
                           Helpers.formatPrice(product.price),
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppConstants.primaryColor,
                           ),

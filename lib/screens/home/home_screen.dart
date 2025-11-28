@@ -1,9 +1,11 @@
 // lib/screens/home/home_screen.dart
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/product.dart';
-import '../../models/sale.dart';
+// import '../../models/sale.dart';
 import '../../providers/product_provider.dart';
 import '../../providers/sale_provider.dart';
 import '../../utils/constants.dart';
@@ -36,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       saleProvider.loadTodaySales(),
     ]);
   }
+
+String? _imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -249,11 +253,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AppConstants.errorColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(
-                      Icons.inventory_2,
-                      color: AppConstants.errorColor,
-                      size: 20,
-                    ),
+                    child:_imagePath != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: Image.file(
+                                    File(_imagePath!),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.inventory_2,
+                                  color: AppConstants.errorColor,
+                                  size: 30,
+                                ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(

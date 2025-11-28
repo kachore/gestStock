@@ -20,11 +20,20 @@ class ProductProvider with ChangeNotifier {
   String? get error => _error;
   int? get selectedCategoryId => _selectedCategoryId;
 
+  // Méthode pour notifier de manière sécurisée
+  void _safeNotifyListeners() {
+    if (!_isLoading) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
+    }
+  }
+
   // Charger tous les produits
   Future<void> loadProducts() async {
     _isLoading = true;
     _error = null;
-    notifyListeners();
+    _safeNotifyListeners();
 
     try {
       _products = await _productService.getAllProducts();
@@ -35,7 +44,7 @@ class ProductProvider with ChangeNotifier {
       _error = 'Erreur de chargement: $e';
     } finally {
       _isLoading = false;
-      notifyListeners();
+      _safeNotifyListeners();
     }
   }
 
@@ -43,11 +52,11 @@ class ProductProvider with ChangeNotifier {
   Future<bool> addProduct(Product product) async {
     try {
       await _productService.createProduct(product);
-      await loadProducts();
+      await loadProducts(); // loadProducts gère déjà les notifications
       return true;
     } catch (e) {
       _error = 'Erreur d\'ajout: $e';
-      notifyListeners();
+      _safeNotifyListeners();
       return false;
     }
   }
@@ -56,11 +65,11 @@ class ProductProvider with ChangeNotifier {
   Future<bool> updateProduct(Product product) async {
     try {
       await _productService.updateProduct(product);
-      await loadProducts();
+      await loadProducts(); // loadProducts gère déjà les notifications
       return true;
     } catch (e) {
       _error = 'Erreur de modification: $e';
-      notifyListeners();
+      _safeNotifyListeners();
       return false;
     }
   }
@@ -69,11 +78,11 @@ class ProductProvider with ChangeNotifier {
   Future<bool> deleteProduct(int id) async {
     try {
       await _productService.deleteProduct(id);
-      await loadProducts();
+      await loadProducts(); // loadProducts gère déjà les notifications
       return true;
     } catch (e) {
       _error = 'Erreur de suppression: $e';
-      notifyListeners();
+      _safeNotifyListeners();
       return false;
     }
   }
@@ -87,7 +96,7 @@ class ProductProvider with ChangeNotifier {
     } else {
       _filteredProducts = await _productService.getProductsByCategory(categoryId);
     }
-    notifyListeners();
+    _safeNotifyListeners();
   }
 
   // Rechercher des produits
@@ -98,7 +107,7 @@ class ProductProvider with ChangeNotifier {
     } else {
       _filteredProducts = await _productService.searchProducts(query);
     }
-    notifyListeners();
+    _safeNotifyListeners();
   }
 
   // Obtenir les produits en stock bas

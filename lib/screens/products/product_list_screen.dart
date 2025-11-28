@@ -149,12 +149,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (productProvider.products.isEmpty) {
-                  return EmptyState(
-                    icon: Icons.inventory_2,
-                    message: 'Aucun produit trouvé.\nAjoutez votre premier produit !',
-                    buttonText: 'Ajouter un produit',
-                    onButtonPressed: () => _openProductForm(context),
+               if (productProvider.products.isEmpty) {
+                  return SingleChildScrollView( // ← Ajouter ceci
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: EmptyState(
+                            icon: Icons.inventory_2,
+                            message: 'Aucun produit trouvé.\nAjoutez votre premier produit !',
+                            buttonText: 'Ajouter un produit',
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   );
                 }
 

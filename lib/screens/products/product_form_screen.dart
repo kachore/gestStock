@@ -290,7 +290,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                       controller: _priceController,
                       decoration: InputDecoration(
                         labelText: 'Prix unitaire (${AppConstants.currency})',
-                        prefixIcon: const Icon(Icons.attach_money),
+                        prefixIcon: const Icon(Icons.account_balance_wallet),
                       ),
                       keyboardType: TextInputType.number,
                       validator: Helpers.validatePrice,

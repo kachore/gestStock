@@ -79,4 +79,16 @@ class Product {
   String toString() {
     return 'Product(id: $id, name: $name, categoryId: $categoryId, price: $price, quantity: $quantity)';
   }
+
+  // Ajoutez ces méthodes pour permettre la comparaison correcte
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Product &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
 }
