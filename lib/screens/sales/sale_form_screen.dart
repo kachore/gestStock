@@ -134,15 +134,20 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(product.name),
-                                Text(
-                                  'Stock: ${product.quantity}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: product.isLowStock
-                                        ? AppConstants.errorColor
-                                        : Colors.grey.shade600,
-                                  ),
+                                Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(product.name),
+                                    Text(
+                                      'Stock: ${product.quantity}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: product.isLowStock
+                                            ? AppConstants.errorColor
+                                            : Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -219,7 +224,7 @@ class _SaleFormScreenState extends State<SaleFormScreen> {
                                       const SizedBox(height: 4),
                                       
                                       Text(
-                                        "Unité : ${Helpers.formatPrice(_selectedProduct!.price)},",
+                                        "Unité : ${Helpers.formatPrice(_selectedProduct!.price)}",
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w500,
