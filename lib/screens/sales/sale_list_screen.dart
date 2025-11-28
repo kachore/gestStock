@@ -245,30 +245,34 @@ class _SaleListScreenState extends State<SaleListScreen> with SingleTickerProvid
                   const SizedBox(height: 16),
 
                   // Info
-                  Card(
-                    color: AppConstants.accentColor.withOpacity(0.1),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.info_outline,
-                            color: AppConstants.accentColor,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              'Les statistiques sont calculées en temps réel à partir de vos ventes.',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade700,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: Card(
+                      color: AppConstants.cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.info_outline,
+                              color: AppConstants.accentColor,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Les statistiques sont calculées en temps réel à partir de vos ventes.',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade700,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 40),
                 ],
               ),
             );

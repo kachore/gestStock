@@ -1,5 +1,4 @@
 // lib/app.dart
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/product_provider.dart';
@@ -11,6 +10,7 @@ import 'screens/categories/category_list_screen.dart';
 import 'screens/sales/sale_list_screen.dart';
 import 'utils/constants.dart';
 import 'utils/theme.dart';
+import 'splashScreen.dart'; // Ajoutez cette importation
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,12 +27,16 @@ class MyApp extends StatelessWidget {
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: const MainScreen(),
+        home: const SplashScreen(), // SplashScreen comme écran initial
+        routes: {
+          '/main': (context) => const MainScreen(), // Route pour l'écran principal
+        },
       ),
     );
   }
 }
 
+// Votre classe MainScreen reste inchangée
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -75,7 +79,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
       child: Scaffold(
         body: TabBarView(
           controller: _tabController,
-          physics: const NeverScrollableScrollPhysics(), // Désactiver le swipe
+          physics: const NeverScrollableScrollPhysics(),
           children: _screens,
         ),
         bottomNavigationBar: BottomNavigationBar(

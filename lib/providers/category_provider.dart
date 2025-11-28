@@ -19,7 +19,9 @@ class CategoryProvider with ChangeNotifier {
   Future<void> loadCategories() async {
     _isLoading = true;
     _error = null;
-    notifyListeners();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
 
     try {
       _categories = await _categoryService.getAllCategories();
@@ -28,7 +30,9 @@ class CategoryProvider with ChangeNotifier {
       _error = 'Erreur de chargement: $e';
     } finally {
       _isLoading = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
       notifyListeners();
+    });
     }
   }
 

@@ -45,5 +45,17 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Permissions pour la caméra -->
+    <key>NSCameraUsageDescription</key>
+    <string>GestStock a besoin d'accéder à la caméra pour prendre des photos de produits</string>
+    
+    <!-- Permissions pour la galerie photos -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>GestStock a besoin d'accéder à vos photos pour choisir une image de produit</string>
+    
+    <!-- Pour iOS 14+ -->
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>GestStock a besoin d'accéder à vos photos pour enregistrer des images</string>
 </dict>
 </plist>

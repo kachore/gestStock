@@ -46,6 +46,7 @@ class DatabaseHelper {
         price REAL NOT NULL,
         quantity INTEGER NOT NULL,
         imagePath TEXT,
+        supplier TEXT,
         createdAt TEXT NOT NULL,
         FOREIGN KEY (categoryId) REFERENCES ${AppConstants.tableCategories} (id)
           ON DELETE CASCADE
@@ -61,6 +62,7 @@ class DatabaseHelper {
         quantity INTEGER NOT NULL,
         unitPrice REAL NOT NULL,
         totalPrice REAL NOT NULL,
+        customerInfo TEXT,
         date TEXT NOT NULL,
         FOREIGN KEY (productId) REFERENCES ${AppConstants.tableProducts} (id)
           ON DELETE CASCADE

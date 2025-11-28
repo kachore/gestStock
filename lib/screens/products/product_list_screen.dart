@@ -1,5 +1,6 @@
 // lib/screens/products/product_list_screen.dart
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/product.dart';
@@ -26,9 +27,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   void initState() {
     super.initState();
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-    _loadData(); // <--- plus jamais de notifyListeners() pendant le build
-  });
+    _loadData();
   }
 
   Future<void> _loadData() async {
@@ -150,12 +149,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (productProvider.products.isEmpty) {
-                  return EmptyState(
-                    icon: Icons.inventory_2,
-                    message: 'Aucun produit trouvé.\nAjoutez votre premier produit !',
-                    buttonText: 'Ajouter un produit',
-                    onButtonPressed: () => _openProductForm(context),
+               if (productProvider.products.isEmpty) {
+                  return SingleChildScrollView( // ← Ajouter ceci
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: EmptyState(
+                            icon: Icons.inventory_2,
+                            message: 'Aucun produit trouvé.\nAjoutez votre premier produit !',
+                            buttonText: 'Ajouter un produit',
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   );
                 }
 
@@ -225,11 +233,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       color: AppConstants.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
-                      Icons.inventory_2,
-                      color: AppConstants.primaryColor,
-                      size: 40,
-                    ),
+                    child: product.imagePath != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(product.imagePath!),
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(
+                                  Icons.inventory_2,
+                                  color: AppConstants.primaryColor,
+                                  size: 40,
+                                );
+                              },
+                            ),
+                          )
+                        : const Icon(
+                            Icons.inventory_2,
+                            color: AppConstants.primaryColor,
+                            size: 40,
+                          ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -262,6 +285,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
               _buildDetailRow('Prix unitaire', Helpers.formatPrice(product.price)),
               _buildDetailRow('Stock disponible', '${product.quantity} unités'),
               _buildDetailRow('Valeur totale', Helpers.formatPrice(product.price * product.quantity)),
+              if (product.supplier != null)
+                _buildDetailRow('Fournisseur', product.supplier!),
               _buildDetailRow('Date d\'ajout', Helpers.formatDateFromString(product.createdAt)),
               const SizedBox(height: 24),
               Row(

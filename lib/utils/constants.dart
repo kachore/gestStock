@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   // Nom de l'application
-  static const String appName = 'KORA STOCK MANAGER';
+  static const String appName = 'GestStock';
   
   // Nom de la base de données
-  static const String dbName = 'kora_stock.db';
+  static const String dbName = 'geststock.db';
   static const int dbVersion = 1;
   
   // Noms des tables
@@ -21,7 +21,7 @@ class AppConstants {
   static const Color backgroundColor = Color(0xFFF3F4F6); // Gris clair
   static const Color cardColor = Colors.white;
   static const Color textColor = Color(0xFF1F2937); // Gris foncé
-  static const Color warningColor = Color(0xFFF59E0B); // Orange
+  static const Color warningColor = Color.fromARGB(255, 255, 192, 82); // Orange
   static const Color errorColor = Color(0xFFEF4444); // Rouge
   static const Color successColor = Color(0xFF10B981); // Vert
   
@@ -29,7 +29,7 @@ class AppConstants {
   static const int lowStockThreshold = 5;
   
   // Format de devise
-  static const String currency = 'FCFA';
+  static const String currency = 'F';
   
   // Messages
   static const String msgProductAdded = 'Produit ajouté avec succès';

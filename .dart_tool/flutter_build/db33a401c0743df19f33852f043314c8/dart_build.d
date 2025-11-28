@@ -1,0 +1,1 @@
+ D:\\gestStock\\.dart_tool\\flutter_build\\db33a401c0743df19f33852f043314c8\\dart_build_result.json: 

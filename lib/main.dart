@@ -1,8 +1,8 @@
 // lib/main.dart
+import 'package:geststock/app.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'app.dart';
 
 void main() async {
   // S'assurer que les bindings Flutter sont initialisés
